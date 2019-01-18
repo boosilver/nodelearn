@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"test"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -22,9 +23,8 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", Index)
-	router.HandleFunc("controller/todos", TodoIndex)
+	router.HandleFunc("/something", test.Index)
 	router.HandleFunc("/todos/{todoId}", TodoShow)
-
 	log.Fatal(http.ListenAndServe(":1234", router))
 }
 
@@ -40,10 +40,6 @@ func TodoIndex(w http.ResponseWriter, r *http.Request) {
 
 	json.NewEncoder(w).Encode(todos)
 }
-
-// func TodoIndex(w http.ResponseWriter, r *http.Request) {
-// 	fmt.Fprintln(w, "Todo Index!")
-// }
 
 func TodoShow(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
