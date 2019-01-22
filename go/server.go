@@ -2,24 +2,94 @@ package main
 
 import (
 	"net/http"
-
+	
+	"fmt"
 	"github.com/labstack/echo"
+	// "github.com/labstack/echo/middleware"
 )
+
+
 
 func main() {
 
-	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
+	router := echo.New()
+	
+
+	router.POST("/Message", func(c echo.Context) error {
+		var msg Message
+		
+		if err := c.Bind(&msg); err == nil {
+			fmt.Println(msg)
+			return c.JSON(http.StatusOK, msg)
+		}
+		return c.JSON(http.StatusBadRequest, "Bad Request")
+	})
+
+
+
+	router.POST("/postdate", func(c echo.Context) error {
+		var msg Message2
+		if err := c.Bind(&msg); err == nil {
+			fmt.Println(msg)
+			
+			sss :=postdate(msg.Text)
+			s := fmt.Sprintf("result = %.2f ", sss)
+			return c.JSON(http.StatusOK, s)
+		}
+		return c.JSON(http.StatusBadRequest, "Bad Request")
+	})
+
+
+	router.GET("/", func(c echo.Context) error {
 		return c.String(http.StatusOK, "newtest")
 	})
-	e.GET("/getValue", getValue)
-	e.GET("/api", api)
-	e.GET("/getdate/:a", getdate)
-	e.GET("/divide/:a/:b", divide)
+	router.GET("/getValue", getValue)
+	router.GET("/date", date)
+	
+	router.POST("/getValue", getValue2)
 
-	e.Logger.Fatal(e.Start(":3754"))
+	// e.GET("/api", api)
 
+	router.GET("/getdate/:a", getdate)
+
+	router.GET("/divide/:a/:b", divide)
+	
+	router.POST("/power/:a/:b", power)
+
+
+	
+
+
+
+	router.Logger.Fatal(router.Start(":3754"))
+
+
+	
 }
+// e.Use(middleware.Logger())
+ 	// e.Use(middleware.Recover())
+	//Router
+
+	// route := e.POST("/users", func(c echo.Context) error {
+	// 	return nil
+	// })
+	// route.Name = "create-user"
+	
+	// // or using the inline syntax
+	// e.GET("/users/:id", func(c echo.Context) error {
+	// 	return nil
+	// }).Name = "get-user"
+
+// e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+	// 	AllowOrigins: []string{"*"},
+	// 	AllowMethods: []string{echo.GET, echo.HEAD, echo.PUT, echo.PATCH, echo.POST, echo.DELETE},
+	//    }))
+	// 	data, err := json.MarshalIndent(e.Routes(), "", "  ")
+// if err != nil {
+// 	return err
+// }
+// ioutil.WriteFile("router.json", data, 3754)
+
 
 //ต้องโยนฟังก์ชั่นไป
 
@@ -47,3 +117,9 @@ func main() {
 // router.GET("/", Index)
 // router.GET("/hello/:name", Hello)
 // log.Fatal(http.ListenAndServe(":3754", router))
+
+
+///เริ่มการใช้ go  https://echo.labstack.com/guide
+//  คำสั่ง git https://www.memo8.com/git-basic-command/?fbclid=IwAR2p1s7j2iDw4Jo9soB8JsggJNGOUayxbvzwDLrhvJPRPVkFn7TBkz7eG0E
+// go api https://stackoverflow.com/questions/26142074/call-a-function-from-another-package-in-go?fbclid=IwAR3E1l3CnTwVTED_4CU852gwiPKIUmclbRnZLO9xB_vMC8w8WjlJiDT_T28
+//ทำเป็นทศนิยม   javascript https://stackoverflow.com/questions/4435170/how-to-parse-float-with-two-decimal-places-in-javascript?fbclid=IwAR2MpMuLscBvvJEInFcny_Rc_gVMHtV2VeP3KJqn9xv7i4Q6o1M8cbyjm7g

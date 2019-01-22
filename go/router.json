@@ -1,0 +1,42 @@
+// package main
+
+// import (
+// 	"net/http"
+
+// 	"github.com/labstack/echo"
+// )
+
+
+
+// func api(c echo.Context) error {
+
+// 	return c.String(http.StatusOK, "test")
+// }
+// data, err := json.MarshalIndent(e.Routes(), "", "  ")
+// if err != nil {
+// 	return err
+// }
+// ioutil.WriteFile("router.json", data, 3754)
+[
+  {
+    "method": "POST",
+    "path": "/getValue",
+    "name": "main.getValue"
+  },
+  {
+    "method": "GET",
+    "path": "/getValue",
+    "name": "main.getValue2"
+  },
+  {
+    "method": "PUT",
+    "path": "/users",
+    "name": "main.updateUser"
+  },
+  {
+    "method": "DELETE",
+    "path": "/users",
+    "name": "main.deleteUser"
+  }
+]
+
