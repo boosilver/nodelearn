@@ -1,11 +1,11 @@
-package test
+package main
 
 import (
 	"fmt"
 	"net/http"
 )
 
-func Index(w http.ResponseWriter, r *http.Request) {
+func Index2(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintln(w, "Hello from another!")
 }
 

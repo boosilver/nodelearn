@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"net/http"
-	"test"
 	"time"
 
 	"github.com/gorilla/mux"
@@ -23,7 +22,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", Index)
-	router.HandleFunc("/something", test.Index)
+	router.HandleFunc("/something", Index2)
 	router.HandleFunc("/todos/{todoId}", TodoShow)
 	log.Fatal(http.ListenAndServe(":1234", router))
 }

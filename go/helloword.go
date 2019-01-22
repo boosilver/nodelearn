@@ -24,5 +24,5 @@ func main() {
 	f := float32(sum / nn)
 	fmt.Println("Welcome to the playground!")
 	fmt.Println("Value is :", sum, " / ", n)
-	fmt.Printf("Sum is %f\n", f)
+	fmt.Printf("Sum is %.4f", f)
 }

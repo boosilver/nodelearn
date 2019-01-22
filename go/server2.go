@@ -9,7 +9,19 @@ import (
 	"github.com/labstack/echo"
 )
 
-func getUser(c echo.Context) error {
+func getdate(c echo.Context) error {
+	t := time.Now()
+	fmt.Println(t.Format("2006-01-02"))
+	y := float64(t.Year())
+	mon := t.Month()
+	var l int = int(mon)
+	k := float64(l)
+	d := float64(t.Day())
+	date := fmt.Sprintf("", y, k, d)
+	return c.String(http.StatusOK, date)
+}
+
+func getsum(c echo.Context) error {
 	// User ID from path `users/:id`
 	a := c.Param("a")
 	g, err := strconv.Atoi(a)
@@ -30,8 +42,6 @@ func getUser(c echo.Context) error {
 	var sum float64 = y + k + d
 	fmt.Println("Sum of Date = ", sum)
 	suma2 := float64(sum / i)
-	fmt.Print(sum, "/", i)
-	fmt.Printf(" Sum of time is :\t%.4f", suma2)
 
 	s := fmt.Sprintf("%.4f", suma2)
 	return c.String(http.StatusOK, s)
@@ -56,11 +66,12 @@ func divide(c echo.Context) error {
 
 func main() {
 	e := echo.New()
-	e.GET("/date/:a", getUser)
+	e.GET("/date", getdate)
+	e.GET("/date/:a", getsum)
 	e.GET("/divide/:a/:b", divide)
 
 	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "newtest")
+		return c.String(http.StatusOK, "Hello This is HomePage")
 	})
 	e.Logger.Fatal(e.Start(":1234"))
 
